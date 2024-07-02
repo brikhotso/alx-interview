@@ -1,32 +1,29 @@
 #!/usr/bin/python3
-""" lockboxes """
+"""A method that determines if all the boxes can be opened."""
 
 
 def canUnlockAll(boxes):
     """
-    This function determines if all the boxes can be opened.
+    Return True if all boxes can be unlocked, else return False.
 
     Parameters:
-    boxes (list of lists): sublist contains keys to the other boxes.
+    boxes (list of lists): Sublist contains keys to the other boxes.
 
     Returns:
-    bool: True if all boxes can be opened, False otherwise.
+    bool: True if all boxes can be unlocked, False otherwise.
     """
-    n = len(boxes)
-    visited = set()
+    total_boxes = len(boxes)
+    opened_boxes = set([0])
+    keys = set(boxes[0])
 
-    def dfs(i):
-        """
-        Helper function to perform depth-first search.
+    while keys:
+        new_keys = set()
+        for key in keys:
+            if key < total_boxes and key not in opened_boxes:
+                opened_boxes.add(key)
+                new_keys.update(boxes[key])
+        if not new_keys:
+            break
+        keys = new_keys
 
-        Parameters:
-        i (int): Index of the current box.
-        """
-        visited.add(i)
-        for key in boxes[i]:
-            if key not in visited and key < n:
-                dfs(key)
-
-    dfs(0)
-
-    return len(visited) == n
+    return total_boxes == len(opened_boxes)
