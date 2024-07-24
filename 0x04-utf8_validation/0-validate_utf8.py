@@ -12,16 +12,17 @@ def validUTF8(data):
 
     for num in data:
         # If this is the first byte of a character
+        num = num & 0xFF
         if num_bytes == 0:
             # Determine the number of bytes in the UTF-8 character
-            if (num >> 5) == 0b110:
+            if (num >> 7) == 0b0:
+                continue
+            elif (num >> 5) == 0b110:
                 num_bytes = 1
             elif (num >> 4) == 0b1110:
                 num_bytes = 2
             elif (num >> 3) == 0b11110:
                 num_bytes = 3
-            elif (num >> 7) == 0:
-                continue
             else:
                 return False
         else:
