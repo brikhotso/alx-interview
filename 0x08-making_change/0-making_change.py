@@ -4,6 +4,8 @@
 
 def makeChange(coins, total):
     """ Make change on Coins"""
+    if total < 0:
+        return 0
     # Sort coins in descending order
     coins.sort(reverse=True)
 
